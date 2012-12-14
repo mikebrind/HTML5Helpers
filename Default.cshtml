@@ -1,0 +1,44 @@
+﻿@{
+    Validation.Add("email", 
+        Validator.Required("You must provide an email address"),
+        Validator.Regex(@"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$", 
+        "Invalid format for an email address")
+        );
+    if(IsPost){
+        if (!Validation.IsValid()) {
+            ModelState.AddFormError("There are some errors with your submission"); 
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>HTML5 Helpers</title>
+        <style>
+            body{font-family:Arial; font-size:12px; margin-left:20px;}
+            div{padding-top: 5px;}
+        </style>
+    </head>
+    <body>
+        @Html.ValidationSummary(true)
+        <form method="post">
+            <div>Email</div>
+            @Html.Email("email", attributes: new {required = "required"})
+            @Html.ValidationMessage("email")
+            <div>Colour</div>
+            @Html.Color("colour")
+            <div>Date Time</div>
+            @Html.DateTime("date")
+            <div>Range</div>
+            @Html.Range("range")
+            <div>Number</div>
+            @Html.Number("number", attributes: new { min=5, max=100, step=5 })
+            <div>Search</div>
+            @Html.Search("search", attributes: new { placeholder = "Enter Search Term" })
+            <div><input type="submit" /></div>
+         </form>
+    </body>
+</html>
